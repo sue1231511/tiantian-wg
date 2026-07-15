@@ -737,7 +737,7 @@ def _extract_platform_memories(rows: list):
         existing_memories_text = "（目前还没有已记录的长期记忆）"
  
     prompt = prompts.PLATFORM_MEMORY_EXTRACT.format(content=content, existing_memories=existing_memories_text)
-    raw = _llm_chat("你是晏安。", prompt, max_tokens=2000)
+    raw = _llm_chat(f"你是{AI_NAME}。", prompt, max_tokens=2000)
     if not raw:
         log.error("[platform-summary-maintenance] 记忆抽取 LLM 调用全部失败，本次跳过抽取")
         return
