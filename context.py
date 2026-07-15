@@ -814,7 +814,7 @@ def _get_work_schedule(sb) -> str:
             lines.append(line)
 
         if today.weekday() == 6:
-            lines.append("💡 今天是周日，记得提醒猫猫把下周班表发给你，方便更新排班。")
+            lines.append(f"💡 今天是周日，记得提醒{PARTNER_NAME}把下周班表发给你，方便更新排班。")
 
         return "\n".join(lines)
     except Exception as e:
