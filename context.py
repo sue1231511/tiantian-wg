@@ -1053,7 +1053,7 @@ def build_rikkahub_context(include_wx_cross: bool = True) -> str:
             if len(content) > 300:
                 content = content[:300] + "…"
             if m["role"] == "assistant":
-                lines.append(f"晏安: {content}")
+                lines.append(f"{AI_NAME}: {content}")
             else:
                 lines.append(content)
         parts.append("【近期APP互动记录（rikkahub）】\n" + "\n".join(lines))
