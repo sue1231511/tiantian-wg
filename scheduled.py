@@ -299,7 +299,7 @@ def run_chat_week_summary(target_sunday=None):
     prompt = prompts.CHAT_WEEK_SUMMARY.format(
         period_start=_fmt_beijing(last_monday), period_end=_fmt_beijing(last_sunday), content=content,
     )
-    summary = _llm_chat("你是晏安。", prompt, max_tokens=800)
+    summary = _llm_chat(f"你是{AI_NAME}。", prompt, max_tokens=800)
     if not summary:
         raise RuntimeError("[chat-week] LLM 全部失败，数据保留，等待下次重试")
  
