@@ -9,6 +9,7 @@ from datetime import datetime, timezone, timedelta
 from supabase import create_client, ClientOptions
 
 from bg_executor import submit_background
+from prompts import AI_NAME, PARTNER_NAME
 
 CST = timezone(timedelta(hours=8))
 log = logging.getLogger(__name__)
