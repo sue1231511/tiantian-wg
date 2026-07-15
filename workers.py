@@ -431,7 +431,7 @@ async def handle_telegram_update(update: dict):
         if text and _check_mute(text, sender_id):
             await asyncio.to_thread(
                 send_telegram_message,
-                f"好的猫猫🐱，我去角落待{os.environ.get('MUTE_DURATION', '5')}分钟",
+                f"好的🐱，我去角落待{os.environ.get('MUTE_DURATION', '5')}分钟",
                 chat_id,
             )
             return
