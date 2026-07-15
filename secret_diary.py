@@ -4,6 +4,8 @@ import requests
  
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY", "")
+
+from prompts import PARTNER_NAME
  
 _SB_HEADERS = {
     "apikey": SUPABASE_KEY,
