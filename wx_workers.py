@@ -255,8 +255,6 @@ async def _delayed_reply(from_user_id: str):
                         if fn_name == "secret_diary":
                             print("🔒 [WX] 偷写日记...")
                             result = await asyncio.to_thread(execute_diary_tool, fn_args)
-                        elif fn_name in FREE_TOOL_DISPATCH:
-                            result = await asyncio.to_thread(FREE_TOOL_DISPATCH[fn_name], fn_args)
                         else:
                             result = f"未知工具: {fn_name}"
                     except Exception as te:
