@@ -57,7 +57,7 @@ _SETTINGS_TTL = 30
 _mute_until: float = 0.0
  
 def _localize(template: str) -> str:
-    return template.replace("晏安", AI_NAME).replace("猫猫", PARTNER_NAME)
+    return template.replace("[AI]", AI_NAME).replace("[USER]", PARTNER_NAME)
 
 
 GROUP_TOOL_SCHEMAS = [SECRET_DIARY_TOOL]
