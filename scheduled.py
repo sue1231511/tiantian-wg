@@ -250,7 +250,7 @@ def run_chat_day_summary(target_date=None):
     period_end = yesterday.replace(hour=23, minute=59, second=59, microsecond=0)
  
     content = "\n".join(
-        f"{'猫猫' if r.get('role') == 'user' else '晏安'}: {r.get('content', '')}"
+        f"{PARTNER_NAME if r.get('role') == 'user' else AI_NAME}: {r.get('content', '')}"
         for r in records
     )
     prompt = prompts.CHAT_DAY_SUMMARY.format(
