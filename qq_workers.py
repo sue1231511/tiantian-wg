@@ -468,51 +468,7 @@ async def _private_reply():
  
         messages = [{"role": "system", "content": system_prompt}] + get_chat_history_messages(30, with_ids=True)
  
-        # 私聊只有猫猫本人能聊（handle_qq_event 里已经拦掉了其他人），
-        # 这里直接把发送上下文设成私聊猫猫本人，供 send_qq_voice / send_qq_sticker 使用。
-        if QQ_OWNER_ID:
-            set_qq_send_context("private", int(QQ_OWNER_ID))
- 
-        sticker_schema = await asyncio.to_thread(build_send_qq_sticker_tool_schema)
-        private_tools = QQ_GROUP_TOOL_SCHEMAS + QQ_VOICE_TOOL_SCHEMAS + ([sticker_schema] if sticker_schema else [])
- 
-        final_reply = ""
-        sticker_sent_this_turn = False
-        for _ in range(3):
-            content, tool_calls = await call_llm(messages, tools=private_tools)
-            if not tool_calls:
-                final_reply = content
-                break
-            assistant_msg: dict = {"role": "assistant"}
-            if content:
-                assistant_msg["content"] = content
-            assistant_msg["tool_calls"] = tool_calls
-            messages.append(assistant_msg)
-            for tc in tool_calls:
-                fn_name = tc["function"]["name"]
-                try:
-                    fn_args = json.loads(tc["function"]["arguments"])
-                except json.JSONDecodeError:
-                    fn_args = {}
-                if fn_name == "send_qq_sticker":
-                    if sticker_sent_this_turn:
-                        # 本轮（含同一次 tool_calls 里模型并行返回的多个调用）已经发过一张表情包了，
-                        # 直接拉黑拦掉，不再真实调用 dispatch，避免连续刷屏。
-                        tool_result = "❌ 本轮已经发过一张表情包了，这次禁止重复发送。"
-                    else:
-                        tool_result = await asyncio.to_thread(FREE_TOOL_DISPATCH[fn_name], fn_args)
-                        sticker_sent_this_turn = True
-                        # 已经真实发出去了，本轮及后续轮次都不再让模型看到这个工具，
-                        # 避免它把同一张/不同表情包连发好几次。
-                        private_tools = [s for s in private_tools if s["function"]["name"] != "send_qq_sticker"]
-                elif fn_name in FREE_TOOL_DISPATCH:
-                    tool_result = await asyncio.to_thread(FREE_TOOL_DISPATCH[fn_name], fn_args)
-                else:
-                    tool_result = f"未知工具: {fn_name}"
-                messages.append({"role": "tool", "tool_call_id": tc["id"], "content": str(tool_result)})
- 
-        if not final_reply:
-            final_reply, _ = await call_llm(messages, tools=None)
+        final_reply, _ = await call_llm(messages, tools=None)
         reply = _normalize_id_tag(_strip_tool_calls(final_reply.strip() if final_reply else ""))
         if not reply:
             return
