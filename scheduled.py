@@ -926,25 +926,6 @@ def build_free_activity_context() -> tuple[str, str]:
     else:
         activity_summary_text = "（暂无活动总结）"
  
-    recent_acts = _sb_get("activity_log", "order=created_at.desc&limit=15&select=created_at,action,result")
-    recent_acts.reverse()
-    recent_act_lines = []
-    for a in recent_acts:
-        raw_t = a.get("created_at", "")
-        try:
-            from datetime import datetime as _dt2
-            dt_a = _dt2.fromisoformat(raw_t.replace("Z", "+00:00"))
-            t_a = dt_a.astimezone(BEIJING).strftime("%H:%M")
-        except Exception:
-            t_a = raw_t[11:16]
-        action_a = a.get("action", "")
-        result_a = (a.get("result") or "")[:60]
-        line_a = f"[{t_a}] {action_a}"
-        if result_a:
-            line_a += f" → {result_a}"
-        recent_act_lines.append(line_a)
-    recent_activity_text = "\n".join(recent_act_lines) if recent_act_lines else "（暂无近期行动记录）"
- 
     recent_msgs = _sb_get("chat_context", "type=eq.message&order=seq.desc&limit=30")
     recent_msgs.reverse()
     chat_raw_lines = []
