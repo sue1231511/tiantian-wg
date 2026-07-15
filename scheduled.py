@@ -484,7 +484,7 @@ def run_activity_day_summary(target_date=None):
         period_end=_fmt_beijing(period_end),
         content=content,
     )
-    summary = _llm_chat("你是晏安。", prompt, max_tokens=3000)
+    summary = _llm_chat(f"你是{AI_NAME}。", prompt, max_tokens=3000)
     if not summary:
         log.error("[activity-day] LLM 全部失败，本次跳过，数据保留")
         return
