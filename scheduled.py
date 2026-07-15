@@ -335,7 +335,7 @@ def run_chat_month_summary(target_month_end=None):
     prompt = prompts.CHAT_MONTH_SUMMARY.format(
         period_start=_fmt_beijing(last_start), period_end=_fmt_beijing(last_end), content=content,
     )
-    summary = _llm_chat("你是晏安。", prompt, max_tokens=1000)
+    summary = _llm_chat(f"你是{AI_NAME}。", prompt, max_tokens=1000)
     if not summary:
         raise RuntimeError("[chat-month] LLM 全部失败，数据保留，等待下次重试")
  
