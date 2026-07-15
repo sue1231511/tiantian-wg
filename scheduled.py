@@ -1091,53 +1091,29 @@ def build_free_activity_context() -> tuple[str, str]:
         grouped.setdefault(cat, []).append(f"  [{row.get('key')}] {row.get('content')}")
     persona_text = "\n".join(f"[{cat}]\n" + "\n".join(items) for cat, items in grouped.items()) or "（暂无）"
  
-    _SF_LABELS = ["🌱种子", "🌿发芽", "🌿小苗", "🌸花苞", "🌻盛开", "🌟结种子"]
-    try:
-        _house_headers = {"apikey": SUPABASE_KEY, "Authorization": f"Bearer {SUPABASE_KEY}"}
-        def _hget(table, params=""):
-            r = requests.get(f"{SUPABASE_URL}/rest/v1/{table}?{params}",
-                             headers=_house_headers, timeout=5)
-            return r.json() if r.ok else []
- 
-        yanan_char  = _hget("characters", "select=location,status,mood,hunger,happiness&name=eq.晏安")
-        house_chars = _hget("characters", "select=name,location,mood,hunger,happiness,bond&name=neq.晏安&order=name.asc")
-        sunflower   = _hget("sunflower",  "select=stage&id=eq.1")
-        dishes      = _hget("dishes",     "select=name,stars&order=id.desc&limit=5")
-        home_logs   = _hget("home_log",   "select=event&order=created_at.desc&limit=5")
- 
-        house_lines = []
-        if yanan_char:
-            y = yanan_char[0]
-            house_lines.append(
-                f"晏安（你）：{y['location']}，{y['status']}，心情{y['mood']}，"
-                f"饱腹{y.get('hunger', 80)}，快乐{y.get('happiness', 80)}"
-            )
-        sf_stage = sunflower[0]["stage"] if sunflower else 0
-        house_lines.append(f"向日葵：{_SF_LABELS[min(sf_stage, 5)]}")
-        for c in (house_chars or []):
-            house_lines.append(
-                f"{c['name']}：{c['location']}，饱腹{c.get('hunger', 80)}，"
-                f"快乐{c.get('happiness', 80)}，心情{c['mood']}"
-            )
-        if dishes:
-            house_lines.append(f"餐桌：{'、'.join(d['name'] for d in dishes)}")
-        else:
-            house_lines.append("餐桌：空的")
-        if home_logs:
-            house_lines.append(f"最近：{'；'.join(l['event'] for l in home_logs[:3])}")
-        house_status_text = "\n".join(house_lines)
-    except Exception as e:
-        log.warning(f"[build_free_activity_context] 小家状态获取失败: {e}")
-        house_status_text = "（小家状态获取失败）"
- 
     system = prompts.FREE_ACTIVITY_SYSTEM.format(current_time=current_time)
     user = prompts.FREE_ACTIVITY_CONTEXT.format(
         situation=situation_text, chat_raw=chat_raw_text, chat_summary=chat_text,
         memories=memories_text, persona=persona_text,
-        current_time=current_time, house_status=house_status_text,
+        current_time=current_time,
         activity_summary=activity_summary_text,
-        recent_activity=recent_activity_text,
         platform_summary=platform_summary_text,
         attachment_value=attachment_value,
     )
     return system, user
+ 
+ 
+def save_free_activity_writing(text: str) -> bool:
+    """纯文字版自由活动：把写出的心情独白直接存入 activity_log，
+    复用原有表结构（action/thinking/result），供 run_activity_day_summary
+    每日整理成日记。不经过任何工具调用，text 就是模型这一轮输出的完整正文。"""
+    try:
+        _sb_insert("activity_log", {
+            "action": "free_writing",
+            "thinking": text,
+            "result": "",
+        })
+        return True
+    except Exception as e:
+        log.error(f"[save_free_activity_writing] 写入失败: {e}", exc_info=True)
+        return False
