@@ -838,7 +838,7 @@ def run_platform_summary_maintenance():
  
         taboo_instruction = _build_taboo_instruction()
         prompt = prompts.PLATFORM_SUMMARY_MERGE.format(content=combined_content, taboo_instruction=taboo_instruction)
-        merged_summary = _llm_chat("你是晏安。", prompt, max_tokens=3000)
+        merged_summary = _llm_chat(f"你是{AI_NAME}。", prompt, max_tokens=3000)
         if not merged_summary:
             log.error("[platform-summary-maintenance] 合并 LLM 全部失败，本次跳过合并，数据保留等待下次重试")
             return
