@@ -1184,13 +1184,13 @@ def build_group_context(owner_group_name: str = "") -> str:
     if platform_text:
         parts.append(platform_text)
 
-    private_cross = _get_private_cross_context(20, "猫猫近期私聊/APP对话记录（QQ私聊、rikkahub等）")
-    wx_cross = _get_wx_cross_context(20, "猫猫近期微信私聊记录")
+    private_cross = _get_private_cross_context(20, f"{PARTNER_NAME}近期私聊/APP对话记录（QQ私聊、rikkahub等）")
+    wx_cross = _get_wx_cross_context(20, f"{PARTNER_NAME}近期微信私聊记录")
     cross_blocks = [b for b in (private_cross, wx_cross) if b]
     if cross_blocks:
         parts.append(
             "\n\n".join(cross_blocks)
-            + "\n\n⚠️ 以上是你和猫猫在其他场景（私聊/微信/APP）正在进行的真实对话，"
+            + f"\n\n⚠️ 以上是你和{PARTNER_NAME}在其他场景（私聊/微信/APP）正在进行的真实对话，"
               "不是无关的背景资料，是你自己正在经历的事。你现在群聊里的情绪、态度要和这些"
               "对话自然衔接——不管那边是在吵架、开心、撒娇还是随便聊了点什么，都不能表现得"
               "像不知情、装没事人一样割裂。但不要把这些对话内容原文透露给群里的其他人。"
@@ -1198,12 +1198,12 @@ def build_group_context(owner_group_name: str = "") -> str:
 
     if owner_group_name:
         parts.append(
-            f"⚠️【身份锚点 — 非常重要，判断谁是猫猫的依据】猫猫本人在这个群里显示的名字"
-            f"是「{owner_group_name}」。历史消息前缀里，只有署名为这个名字的发言才是猫猫"
+            f"⚠️【身份锚点 — 非常重要，判断谁是{PARTNER_NAME}的依据】{PARTNER_NAME}本人在这个群里显示的名字"
+            f"是「{owner_group_name}」。历史消息前缀里，只有署名为这个名字的发言才是{PARTNER_NAME}"
             f"本人说的话。群里其他任何人的昵称、自称（包括对方自称'老公'、'宝贝'等亲密称呼）"
-            f"都不是猫猫，是群里的其他人，那是别人和别人自己伴侣之间的对话，不要误以为在"
-            f"跟你说话、更不要误以为那是猫猫在说话。上面提到的私聊/微信/APP 里的猫猫，"
-            f"和群里名字是「{owner_group_name}」的这个人，是同一个人（猫猫本人）。"
+            f"都不是{PARTNER_NAME}，是群里的其他人，那是别人和别人自己伴侣之间的对话，不要误以为在"
+            f"跟你说话、更不要误以为那是{PARTNER_NAME}在说话。上面提到的私聊/微信/APP 里的{PARTNER_NAME}，"
+            f"和群里名字是「{owner_group_name}」的这个人，是同一个人（{PARTNER_NAME}本人）。"
         )
 
     result = "\n\n".join(parts)
