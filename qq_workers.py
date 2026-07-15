@@ -760,7 +760,7 @@ async def handle_qq_event(data: dict):
  
         if _check_mute(clean, user_id):
             from qq_bot import send_qq_msg
-            await send_qq_msg("group", int(group_id), f"好的猫猫🐱，我去角落待{MUTE_DURATION}分钟。")
+            await send_qq_msg("group", int(group_id), f"好的🐱，我去角落待{MUTE_DURATION}分钟。")
             return
  
         image_urls = _extract_image_urls(message_list)
