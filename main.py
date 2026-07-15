@@ -35,6 +35,7 @@ from utils import get_active_llm_config
 from context import build_rikkahub_context, save_chat_message, save_rikkahub_message
 from mem0_client import write_mem0_chat
 from bg_executor import submit_background, track_task
+from prompts import AI_NAME
  
 # 以下几条 DeprecationWarning 都来自第三方库内部实现（supabase-py 创建 httpx
 # client 时用了旧参数、uvicorn 还在用旧版 websockets API），不是本项目代码
