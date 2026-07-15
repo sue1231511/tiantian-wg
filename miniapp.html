@@ -854,7 +854,7 @@ function renderChatContext(){
   list.innerHTML='<div class="chat-window" id="chat-window">'+
     msgs.map(m=>{
       const isUser=m.role==='user';
-      const label=isUser?'User':'AI';
+      const label=isUser?'猫猫':'晏安';
       const time=toBeijingTime(m.created_at);
       const full=m.content||'';
       const short=full.length>300?full.slice(0,300)+'…':full;
@@ -875,7 +875,7 @@ function openChatCtxEdit(id){
   const m=_chatCtxMsgs.find(x=>x.id===id);
   if(!m)return;
   _editingChatCtxId=id;
-  const ROLE_LABEL={user:'猫猫',assistant:'晏安'};
+  const ROLE_LABEL={user:'User',assistant:'AI'};
   document.getElementById('chat-ctx-modal-title').textContent='编辑消息 · '+(ROLE_LABEL[m.role]||m.role);
   document.getElementById('chat-ctx-modal-role-label').textContent=m.role;
   document.getElementById('chat-ctx-f-content').value=m.content||'';
