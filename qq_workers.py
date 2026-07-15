@@ -213,9 +213,8 @@ def _normalize_id_tag(text: str) -> str:
  
  
 def _localize(template: str) -> str:
-    """把模板里写死的默认称呼替换成 PARTNER_NAME 环境变量的值（AI 自己的名字
-    已经用 {bot_name} format 占位符处理，这里只处理对方称呼）。"""
-    return template.replace("猫猫", PARTNER_NAME)
+    """把模板里的占位符 [AI] / [USER] 替换成环境变量的值。"""
+    return template.replace("[AI]", AI_NAME).replace("[USER]", PARTNER_NAME)
 
 
 _GROUP_EXTRA_DEFAULT = _localize("""
