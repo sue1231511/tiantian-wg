@@ -43,9 +43,9 @@ BEIJING = timezone(timedelta(hours=8))
 _group_pending: dict[str, asyncio.Task] = {}
 _private_pending: asyncio.Task | None = None
  
-# 猫猫本人在各个 TG 群里显示的昵称（chat_id -> 昵称），供 build_group_context()
+# owner 本人在各个 TG 群里显示的昵称（chat_id -> 昵称），供 build_group_context()
 # 生成身份锚点使用。在 handle_telegram_update 处理群消息时，只要判断出这条
-# 消息是猫猫本人发的（sender_id == TG_CHAT_ID），就记录/刷新一次；查不到时
+# 消息是 owner 本人发的（sender_id == TG_CHAT_ID），就记录/刷新一次；查不到时
 # _group_reply 传空字符串，build_group_context 会跳过身份锚点这一段。
 _tg_owner_group_names: dict[str, str] = {}
  
