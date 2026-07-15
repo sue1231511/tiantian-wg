@@ -1,0 +1,16 @@
+starlette
+uvicorn
+requests
+python-dateutil
+supabase
+httpx
+openai
+mem0ai
+pinecone
+imageio-ffmpeg
+google-auth
+google-auth-httplib2
+google-api-python-client
+websockets
+pycryptodome
+pilk
