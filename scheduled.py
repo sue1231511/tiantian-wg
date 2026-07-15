@@ -930,7 +930,7 @@ def build_free_activity_context() -> tuple[str, str]:
     recent_msgs.reverse()
     chat_raw_lines = []
     for r in recent_msgs:
-        role = "猫猫" if r.get("role") == "user" else "晏安"
+        role = PARTNER_NAME if r.get("role") == "user" else AI_NAME
         chat_raw_lines.append(f"{role}: {r.get('content', '')}")
     tg_chat_text = "\n".join(chat_raw_lines) if chat_raw_lines else "（最近无私聊）"
  
