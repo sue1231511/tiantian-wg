@@ -19,6 +19,7 @@ from mem0_client import search_mem0_context, write_mem0_chat
 from bg_executor import submit_background
 from workers import _parse_and_write_reminders, DIARY_TRIGGER_PROMPT
 from secret_diary import TOOL_DEFINITION as SECRET_DIARY_TOOL, execute_tool as execute_diary_tool
+from prompts import PARTNER_NAME
 
 WX_OWNER_ID  = os.environ.get("WX_OWNER_ID", "")
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
