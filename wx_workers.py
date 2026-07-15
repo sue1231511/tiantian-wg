@@ -19,30 +19,12 @@ from mem0_client import search_mem0_context, write_mem0_chat
 from bg_executor import submit_background
 from workers import _parse_and_write_reminders, DIARY_TRIGGER_PROMPT
 from secret_diary import TOOL_DEFINITION as SECRET_DIARY_TOOL, execute_tool as execute_diary_tool
-from free_tools import TOOL_SCHEMAS as FREE_TOOL_SCHEMAS, TOOL_DISPATCH as FREE_TOOL_DISPATCH
 
 WX_OWNER_ID  = os.environ.get("WX_OWNER_ID", "")
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY", "")
 
-_EMAIL_TOOLS    = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"] in ("read_emails", "send_email")]
-_WEATHER_TOOLS  = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"] in ("get_weather", "get_weather_forecast")]
-_SEARCH_TOOLS   = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"] in ("web_search", "web_extract")]
-_BOTTLE_TOOLS   = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"].startswith("bottle_")]
-_TAOBAO_TOOLS   = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"] == "search_taobao"]
-_PERIOD_TOOLS   = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"].startswith("period_")]
-_LEDGER_TOOLS   = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"] == "get_fish_pond" or s["function"]["name"].startswith("ledger_")]
-_VOICE_TOOLS    = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"] == "send_wx_voice_msg"]
-_CALENDAR_TOOLS = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"].startswith("calendar_")]
-_MUSIC_TOOLS    = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"] in ("compose_music", "cover_song")]
-
-_ALL_TOOLS = (
-    [SECRET_DIARY_TOOL]
-    + _EMAIL_TOOLS + _WEATHER_TOOLS + _SEARCH_TOOLS
-    + _BOTTLE_TOOLS + _TAOBAO_TOOLS + _PERIOD_TOOLS
-    + _LEDGER_TOOLS + _VOICE_TOOLS + _CALENDAR_TOOLS
-    + _MUSIC_TOOLS
-)
+_ALL_TOOLS = [SECRET_DIARY_TOOL]
 
 _context_token_cache: dict[str, tuple[str, float]] = {}  # value: (token, received_at_epoch)
 _private_pending: asyncio.Task | None = None
