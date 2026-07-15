@@ -690,8 +690,7 @@ def _extract_platform_memories(rows: list):
     """从"这一轮新增的滚动摘要行"（不含上一轮维护遗留的那1条，见下方说明）
     里判断有没有值得长期记住的内容，有就写入 memories 表（long_term 层）。
  
-    这是后台系统任务，跟 free_tools.memory_add（自由活动里那个只能写
-    memo/current 层的工具）是两条独立路径：这里明确只写 long_term，且完全
+    这是独立于自由活动写作的后台系统任务：这里明确只写 long_term，且完全
     由 LLM 判断"真的值得"才写，不是每次触发就硬凑一条。
  
     去重：写入前会先查最近的 long_term 记忆列表一起喂给 LLM（见
