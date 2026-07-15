@@ -278,8 +278,6 @@ async def _group_reply(chat_id: str, delay_range: tuple[int, int] = (10, 15)):
                 if fn_name == "secret_diary":
                     print("🔒 [群聊] 偷写日记...")
                     tool_result = await asyncio.to_thread(execute_diary_tool, fn_args)
-                elif fn_name in FREE_TOOL_DISPATCH:
-                    tool_result = await asyncio.to_thread(FREE_TOOL_DISPATCH[fn_name], fn_args)
                 else:
                     tool_result = f"未知工具: {fn_name}"
                 messages.append({"role": "tool", "tool_call_id": tc["id"], "content": str(tool_result)})
