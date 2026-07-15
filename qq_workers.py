@@ -496,7 +496,7 @@ async def _private_reply():
  
  
 async def _group_reply(group_id: str, delay_range: tuple[int, int] = (15, 15),
-                        force_reply: bool = False, allow_voice: bool = False):
+                        force_reply: bool = False):
     current_task = asyncio.current_task()
     _completed = False
     _hist_len_at_reply = 0
