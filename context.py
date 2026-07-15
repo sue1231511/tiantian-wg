@@ -579,7 +579,7 @@ def _get_platform_rolling_summary() -> str:
 
 
 def _get_group_taboo(sb) -> str:
-    """读取猫猫在 miniapp「群聊禁忌」卡片里自己写的隐私红线（bot_settings 表
+    """读取 owner 在 miniapp「群聊禁忌」卡片里自己写的隐私红线（bot_settings 表
     key=group_taboo）。这是 build_group_context() 组装完所有内容之后的
     最外层兜底强指令：不管前面拼进 context 的画像、记忆、跨平台摘要、
     设备状态、跨场景对话记录里混进了什么隐私内容，都在结果最后统一
