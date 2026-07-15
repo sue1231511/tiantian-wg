@@ -30,35 +30,7 @@ from context import (
 from mem0_client import search_mem0_context, write_mem0_chat
 from bg_executor import submit_background
 from secret_diary import TOOL_DEFINITION as SECRET_DIARY_TOOL, execute_tool as execute_diary_tool
-from scheduled import run_nightly_summary, build_free_activity_context
-from free_tools import TOOL_SCHEMAS as FREE_TOOL_SCHEMAS, TOOL_DISPATCH as FREE_TOOL_DISPATCH
- 
-EMAIL_TOOL_SCHEMAS = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"] in ("read_emails", "send_email")]
-WEATHER_TOOL_SCHEMAS = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"] in ("get_weather", "get_weather_forecast")]
-SEARCH_TOOL_SCHEMAS = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"] in ("web_search", "web_extract")]
-BOTTLE_TOOL_SCHEMAS = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"].startswith("bottle_")]
-TAOBAO_TOOL_SCHEMAS = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"] == "search_taobao"]
-PERIOD_TOOL_SCHEMAS = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"].startswith("period_")]
-LEDGER_TOOL_SCHEMAS = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"] == "get_fish_pond" or s["function"]["name"].startswith("ledger_")]
-VOICE_TOOL_SCHEMAS    = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"] == "send_voice"]
-CALENDAR_TOOL_SCHEMAS = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"].startswith("calendar_")]
-MUSIC_TOOL_SCHEMAS    = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"] in ("compose_music", "cover_song")]
- 
-# 纯读操作工具，不应计入"做了什么事"，也不触发重复动作检测。
-# 注意：小家的复合读写工具（house_board_action / house_pet_action /
-# house_garden_action 等）同一个工具名下既有读操作也有写操作，无法按名字
-# 区分读写，因此一律不进白名单、按"实质动作"处理——代价只是连续两轮做完全
-# 相同的复合调用时会收到一次收尾提醒，可接受。
-_FREE_ACTIVITY_READ_TOOLS = {
-    "memory_search", "memory_list", "activity_recent", "activity_summary_view",
-    "house_look_around", "house_find_character", "house_check_weather",
-    "bottle_peek_ocean", "bottle_all", "read_letters", "read_emails",
-    "period_list", "period_status", "get_fish_pond",
-    "ledger_get_records", "ledger_get_summary", "ledger_get_balance", "ledger_export_records",
-    "calendar_get_events", "get_weather", "get_weather_forecast", "web_search", "web_extract",
-}
- 
-_mem0_write_counter = 0
+from scheduled import run_nightly_summary, build_free_activity_context, save_free_activity_writing
  
 log = logging.getLogger(__name__)
  
