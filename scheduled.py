@@ -372,7 +372,7 @@ def run_chat_year_summary(target_year_end=None):
     prompt = prompts.CHAT_YEAR_SUMMARY.format(
         period_start=_fmt_beijing(ly_start), period_end=_fmt_beijing(ly_end), content=content,
     )
-    summary = _llm_chat("你是晏安。", prompt, max_tokens=1200)
+    summary = _llm_chat(f"你是{AI_NAME}。", prompt, max_tokens=1200)
     if not summary:
         raise RuntimeError("[chat-year] LLM 全部失败，数据保留，等待下次重试")
  
