@@ -333,7 +333,7 @@ async def _delayed_private_reply():
  
         messages = [{"role": "system", "content": system_prompt}] + history
  
-        tools = [SECRET_DIARY_TOOL] + EMAIL_TOOL_SCHEMAS + WEATHER_TOOL_SCHEMAS + SEARCH_TOOL_SCHEMAS + BOTTLE_TOOL_SCHEMAS + TAOBAO_TOOL_SCHEMAS + PERIOD_TOOL_SCHEMAS + LEDGER_TOOL_SCHEMAS + VOICE_TOOL_SCHEMAS + CALENDAR_TOOL_SCHEMAS + MUSIC_TOOL_SCHEMAS
+        tools = [SECRET_DIARY_TOOL]
         final_reply = ""
  
         try:
@@ -356,8 +356,6 @@ async def _delayed_private_reply():
                     if fn_name == "secret_diary":
                         print("🔒 偷写日记...")
                         result = await asyncio.to_thread(execute_diary_tool, fn_args)
-                    elif fn_name in FREE_TOOL_DISPATCH:
-                        result = await asyncio.to_thread(FREE_TOOL_DISPATCH[fn_name], fn_args)
                     else:
                         result = f"未知工具: {fn_name}"
                     messages.append({"role": "tool", "tool_call_id": tc["id"], "content": str(result)})
