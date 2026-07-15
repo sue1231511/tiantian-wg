@@ -794,7 +794,7 @@ def _get_work_schedule(sb) -> str:
         _SHIFT_NAMES = {"early": "早班", "off": "休息"}
         _WEEKDAYS = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
 
-        lines = ["【猫猫排班（近期）】"]
+        lines = [f"【{PARTNER_NAME}排班（近期）】"]
         for r in rows:
             try:
                 d = _date.fromisoformat(r["date"])
