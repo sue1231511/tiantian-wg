@@ -22,7 +22,7 @@ DOUBAO_API_KEY = os.environ.get("DOUBAO_API_KEY", "").strip()
 DOUBAO_EMBEDDING_EP = os.environ.get("DOUBAO_EMBEDDING_EP", "").strip()
 SILICON_API_KEY = os.environ.get("SILICON_API_KEY", "").strip()
 SILICONFLOW_EMBEDDING_MODEL = os.environ.get("SILICONFLOW_EMBEDDING_MODEL", "BAAI/bge-m3").strip()
-MEM0_USER_ID = os.environ.get("MEM0_USER_ID", "猫猫")
+MEM0_USER_ID = os.environ.get("MEM0_USER_ID", "user")
 
 _http = requests.Session()
 _adapter = requests.adapters.HTTPAdapter(pool_connections=5, pool_maxsize=5, max_retries=2)
