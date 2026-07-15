@@ -2,8 +2,8 @@
 import os
 
 # AI 的名字 / 对方的称呼，全部可通过环境变量覆盖，不填则保持原来的默认值。
-AI_NAME = os.environ.get("AI_NAME", "晏安")
-PARTNER_NAME = os.environ.get("PARTNER_NAME", "猫猫")
+AI_NAME = os.environ.get("AI_NAME", "AI")
+PARTNER_NAME = os.environ.get("PARTNER_NAME", "User")
 
 
 def _personalize(template: str) -> str:
