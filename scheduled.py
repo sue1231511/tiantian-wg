@@ -940,7 +940,7 @@ def build_free_activity_context() -> tuple[str, str]:
     for r in qq_msgs:
         content_q = r.get("content", "")
         if r.get("role") == "assistant":
-            qq_chat_lines.append(f"晏安: {content_q}")
+            qq_chat_lines.append(f"{AI_NAME}: {content_q}")
         else:
             qq_chat_lines.append(content_q)
     qq_chat_text = "\n".join(qq_chat_lines) if qq_chat_lines else "（最近无群聊）"
