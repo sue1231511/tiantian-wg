@@ -246,7 +246,7 @@ def _get_wx_cross_context(limit: int = 10, label: str = "微信记录") -> str:
             continue
         if len(content) > 200:
             content = content[:200] + "…"
-        prefix = "猫猫" if m["role"] == "user" else "晏安"
+        prefix = PARTNER_NAME if m["role"] == "user" else AI_NAME
         lines.append(f"{prefix}: {content}")
     if not lines:
         return ""
