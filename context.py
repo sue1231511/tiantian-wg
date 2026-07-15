@@ -652,7 +652,7 @@ def _get_device_data(sb, limit: int = 3) -> str:
 
     lines = []
     if rows:
-        lines.append("【猫猫手机状态（近3条快照）】")
+        lines.append(f"【{PARTNER_NAME}手机状态（近3条快照）】")
         for r in reversed(rows):
             raw = r.get("created_at", "") or ""
             try:
