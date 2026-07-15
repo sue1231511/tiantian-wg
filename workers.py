@@ -694,7 +694,7 @@ async def async_proactive_thinking():
                 messages = [system_msg] + history
             else:
                 messages = [system_msg] + history + [
-                    {"role": "user", "content": "（系统触发，非猫猫发送）"}]
+                    {"role": "user", "content": f"（系统触发，非{PARTNER_NAME}发送）"}]
  
             result, _ = await call_llm(messages, max_tokens=2000)
  
