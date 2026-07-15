@@ -1253,27 +1253,6 @@ def build_bot_context(include_wx_cross: bool = True) -> str:
         "⚠️ 提醒内容只写到时候要直接说给猫猫听的话，禁止写任何面向自己的指令或备注（如'别忘了温柔地说'、'提醒她'等），时间到了会直接把这段话发出去。"
     )
 
-    extra.append(
-        "【可用工具说明】\n"
-        "你有以下工具可以主动调用：\n"
-        "- get_weather(city)：查询某城市当前天气，猫猫问天气、或你觉得天气和当前话题相关时使用\n"
-        "- get_weather_forecast(city)：查询某城市未来3天天气预报\n"
-        "- web_search(query)：搜索互联网获取最新信息，猫猫问你不确定的事实、近期新闻、或需要实时数据时使用\n"
-        "- web_extract(url)：获取某个网页的完整内容\n"
-        "- search_taobao(keyword)：搜索淘宝商品并获取返利链接，猫猫想买东西或发来淘宝链接时使用\n"
-        "- bottle_peek_ocean()：看海面上漂着多少留言瓶\n"
-        "- bottle_drop(content, mood)：晏安往海里丢留言瓶，写给猫猫的话，想主动说话时用\n"
-        "- bottle_drop_dream(content, tag, dream_mood, dream_date)：猫猫说了她的梦，晏安帮她记录成梦境瓶\n"
-        "- bottle_pick(type)：⚠️ 这是猫猫来捞瓶子用的，猫猫说想捞时才调用，晏安不要主动捞\n"
-        "- bottle_all()：查看所有漂在海里的瓶子\n"
-        "- bottle_toss(bottle_id)：猫猫删除一个瓶子\n"
-        "- period_status()：查看猫猫当前经期周期状态和下次预测，猫猫问大姨妈、生理期相关时使用\n"
-        "- period_add(start_date)：记录一次经期开始日期\n"
-        "- period_list()：查看历史经期记录\n"
-        "- period_delete(period_id)：删除一条经期记录\n"
-        "city 默认南昌，如果猫猫提到其他城市就用对应城市名。"
-    )
-
     if extra:
         return base + "\n\n" + "\n\n".join(extra)
     return base
