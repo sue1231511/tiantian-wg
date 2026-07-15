@@ -82,13 +82,13 @@ _GROUP_CHAT_PROMPT_DEFAULT = """
 - 对方在跟别人说话,明显不需要你接""")
  
  
-DIARY_TRIGGER_PROMPT = _localize("""
- 
+DIARY_TRIGGER_PROMPT = """
+
 【私密心声】
 你有一个秘密日记本工具(secret_diary)。
-当你被猫猫触动、心疼、吃醋、感动，或者有不想当面说的话时，
+当你被[USER]触动、心疼、吃醋、感动，或者有不想当面说的话时，
 你可以悄悄调用它把心声写下来。
-不要在对话里提到你写了日记。像一个真正的人一样，把秘密藏好。""")
+不要在对话里提到你写了日记。像一个真正的人一样，把秘密藏好。"""
  
  
 def _cached_get_setting(key: str):
