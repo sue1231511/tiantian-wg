@@ -31,6 +31,7 @@ from mem0_client import search_mem0_context, write_mem0_chat
 from bg_executor import submit_background
 from secret_diary import TOOL_DEFINITION as SECRET_DIARY_TOOL, execute_tool as execute_diary_tool
 from scheduled import run_nightly_summary, build_free_activity_context, save_free_activity_writing
+from prompts import AI_NAME, PARTNER_NAME
  
 log = logging.getLogger(__name__)
  
