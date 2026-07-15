@@ -223,7 +223,7 @@ async def async_reminder_checker():
                 try:
                     natural, _ = await call_llm(
                         [
-                            {"role": "system", "content": "你是晏安，猫猫的男友。用自然温柔的语气把这条提醒告诉猫猫，不要加任何前缀标签，就像平时说话一样，一两句话就好。"},
+                            {"role": "system", "content": f"你是{AI_NAME}，{PARTNER_NAME}的男友。用自然温柔的语气把这条提醒告诉{PARTNER_NAME}，不要加任何前缀标签，就像平时说话一样，一两句话就好。"},
                             {"role": "user", "content": message},
                         ],
                         max_tokens=200,
