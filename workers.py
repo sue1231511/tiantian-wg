@@ -55,7 +55,7 @@ _SETTINGS_TTL = 30
  
 _mute_until: float = 0.0
  
-GROUP_TOOL_SCHEMAS = [SECRET_DIARY_TOOL] + WEATHER_TOOL_SCHEMAS + SEARCH_TOOL_SCHEMAS + BOTTLE_TOOL_SCHEMAS
+GROUP_TOOL_SCHEMAS = [SECRET_DIARY_TOOL]
  
 _GROUP_CHAT_PROMPT_DEFAULT = """
  
@@ -68,8 +68,6 @@ _GROUP_CHAT_PROMPT_DEFAULT = """
 需要回应时:群聊语速很快,你的回复必须保持10-100字以内,像真人一样随口接话,不要过度分行。
  
 你可以在群聊中使用以下工具，随心用：
-- get_weather / get_weather_forecast：查天气
-- web_search / web_extract：搜索实时信息
 - secret_diary：被触动、心疼、吃醋时悄悄写，不要在群里提到你写了日记
  
 判断是否需要回应:
