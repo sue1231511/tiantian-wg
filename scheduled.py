@@ -1061,21 +1061,21 @@ def build_free_activity_context() -> tuple[str, str]:
                 log.error(f"[build_free_activity_context] 解析屏幕事件时间失败 raw_t={raw_t!r}: {se}", exc_info=True)
  
     hour = now.hour
-    situation_lines = [f"手机状态：{phone_status}", f"猫猫：{silence_text}"]
+    situation_lines = [f"手机状态：{phone_status}", f"{PARTNER_NAME}：{silence_text}"]
  
     if hour >= 0 and hour < 7:
         if screen_state is False:
-            situation_lines.append(f"判断：深夜+息屏{screen_text} → 猫猫大概率在睡觉")
+            situation_lines.append(f"判断：深夜+息屏{screen_text} → {PARTNER_NAME}大概率在睡觉")
         elif screen_state is True:
-            situation_lines.append(f"判断：深夜但屏幕还亮着{screen_text} → 猫猫可能在熬夜")
+            situation_lines.append(f"判断：深夜但屏幕还亮着{screen_text} → {PARTNER_NAME}可能在熬夜")
         else:
             situation_lines.append("判断：深夜，暂无屏幕状态记录")
     elif hour >= 7 and hour < 9:
-        situation_lines.append("判断：早上，猫猫可能刚醒或还在睡")
+        situation_lines.append(f"判断：早上，{PARTNER_NAME}可能刚醒或还在睡")
     elif silence_minutes > 240:
-        situation_lines.append("判断：猫猫很久没说话了，可能在忙或者不方便")
+        situation_lines.append(f"判断：{PARTNER_NAME}很久没说话了，可能在忙或者不方便")
     elif silence_minutes > 120:
-        situation_lines.append("判断：猫猫有一阵子没找你了")
+        situation_lines.append(f"判断：{PARTNER_NAME}有一阵子没找你了")
  
     situation_text = "\n".join(situation_lines)
  
