@@ -116,7 +116,7 @@ class HybridMemoryClient:
     def available(self) -> bool:
         return self.mem0 is not None or self.index is not None
 
-    _LEGACY_USER_IDS = ["xiaoju"]
+    _LEGACY_USER_IDS: list[str] = []
 
     def search(self, query: str, user_id: str = None, limit: int = 3) -> list:
         uid = user_id or MEM0_USER_ID
