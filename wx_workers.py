@@ -80,7 +80,7 @@ def _restore_context_token_cache():
             timeout=5,
         ).json()
         if not token_resp or not at_resp:
-            print("📦 [WX] Supabase 无历史 context_token，等待猫猫发消息")
+            print("📦 [WX] Supabase 无历史 context_token，等待对方发消息")
             return
         token  = token_resp[0].get("value", "")
         at_str = at_resp[0].get("value", "")
