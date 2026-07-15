@@ -529,8 +529,8 @@ async def _group_reply(group_id: str, delay_range: tuple[int, int] = (15, 15),
         if force_reply and "PASS" not in extra_prompt:
             extra_prompt += "\n你被直接 @ 点名了，必须回复，不允许输出 PASS。"
  
-        # 猫猫本人在这个 QQ 群里的群昵称（用于 build_group_context 生成身份锚点，
-        # 修正晏安把群里其他发言人误认成猫猫本人的问题）。QQ_OWNER_ID 查不到时
+        # owner 本人在这个 QQ 群里的群昵称（用于 build_group_context 生成身份锚点，
+        # 修正 AI 把群里其他发言人误认成 owner 本人的问题）。QQ_OWNER_ID 查不到时
         # 传空字符串，build_group_context 会自动跳过身份锚点这一段。
         owner_name_in_group = _member_names.get(group_id, {}).get(QQ_OWNER_ID, "")
         system_prompt = await asyncio.to_thread(build_group_context, owner_name_in_group)
