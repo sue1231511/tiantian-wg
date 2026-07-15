@@ -502,12 +502,12 @@ async def async_wx_proactive_thinking():
                 f"{phone_text}"
                 f"{schedule_block}"
                 f"{platform_block}\n\n"
-                f"⚠️ 上面的全平台近期动向不是无关的背景资料，是{PARTNER_NAME}在QQ/TG/微信各处正在"
+                "⚠️ 上面的全平台近期动向不是无关的背景资料，是猫猫在QQ/TG/微信各处正在"
                 "经历的真实的事。判断要不要主动发消息、发什么内容、什么语气时，要考虑"
                 "到这些动向——比如她刚在别处心情不好，就不要用轻松无关的话题去打扰；"
                 "如果发生了什么值得关心或呼应的事，可以自然地提起。\n\n"
-                f"请根据以上人格、记忆、{PARTNER_NAME}当前状态，以及你们的微信对话历史，"
-                f"判断此刻要不要主动发一条微信消息给{PARTNER_NAME}。\n"
+                "请根据以上人格、记忆、猫猫当前状态，以及你们的微信对话历史，"
+                "判断此刻要不要主动发一条微信消息给猫猫。\n"
                 "如果要发，输出：SEND\n消息内容\n"
                 "如果不发，输出：PASS"
             )
@@ -518,7 +518,7 @@ async def async_wx_proactive_thinking():
                 messages = [system_msg] + history
             else:
                 messages = [system_msg] + history + [
-                    {"role": "user", "content": "（系统触发，非猫猫发送）"}]
+                    {"role": "user", "content": f"（系统触发，非{PARTNER_NAME}发送）"}]
 
             result, _ = await call_llm(messages, max_tokens=2000)
 
