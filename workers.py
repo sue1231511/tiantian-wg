@@ -297,7 +297,7 @@ async def _group_reply(chat_id: str, delay_range: tuple[int, int] = (10, 15)):
             return
  
         await asyncio.to_thread(send_telegram_message, stripped, chat_id)
-        save_group_message(chat_id, "assistant", "晏安", stripped, source="TG群")
+        save_group_message(chat_id, "assistant", AI_NAME, stripped, source="TG群")
         print(f"💬 群聊[{chat_id}] 回复: {stripped[:60]}")
  
     except asyncio.CancelledError:
