@@ -13,6 +13,7 @@ def _now_ts() -> str:
     return datetime.now(CST).strftime("%m-%d %H:%M")
  
 from utils import call_llm, recognize_image_url, recognize_qq_voice, sanitize_group_reply  # noqa
+from prompts import AI_NAME, PARTNER_NAME
 from context import (
     build_qq_context, build_group_context,
     save_chat_message, save_group_message,
@@ -23,7 +24,7 @@ from mem0_client import write_mem0_chat
 from bg_executor import submit_background, track_task
  
 QQ_BOT_ID     = os.environ.get("QQ_BOT_ID", "")
-QQ_BOT_NAME   = os.environ.get("QQ_BOT_NAME", "晏安")
+QQ_BOT_NAME   = os.environ.get("QQ_BOT_NAME", AI_NAME)
 QQ_OWNER_ID   = os.environ.get("QQ_OWNER_ID", "")
 _raw_groups   = os.environ.get("QQ_GROUP_IDS", "")
 QQ_GROUP_IDS  = set(_raw_groups.split(",")) if _raw_groups else set()
