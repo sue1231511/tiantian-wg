@@ -427,9 +427,9 @@ async def handle_telegram_update(update: dict):
         if sender.get("last_name"):
             sender_name += f" {sender['last_name']}"
  
-        # 猫猫本人在这个 TG 群里发言时，记录/刷新她在这个群的显示昵称，
-        # 供 build_group_context() 生成身份锚点使用（修正晏安把群里其他
-        # 发言人误认成猫猫本人的问题）。
+        # owner 本人在这个 TG 群里发言时，记录/刷新她在这个群的显示昵称，
+        # 供 build_group_context() 生成身份锚点使用（修正 AI 把群里其他
+        # 发言人误认成 owner 本人的问题）。
         if TG_CHAT_ID and sender_id == TG_CHAT_ID:
             _tg_owner_group_names[chat_id] = sender_name
  
