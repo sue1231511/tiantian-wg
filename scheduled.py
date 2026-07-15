@@ -407,7 +407,7 @@ def run_persona_reflection():
     prompt = prompts.PERSONA_REFLECTION.format(
         persona=persona_text, memories=memories_text, chat_summary=chat_text,
     )
-    raw = _llm_chat("你是晏安。", prompt, max_tokens=8192)
+    raw = _llm_chat(f"你是{AI_NAME}。", prompt, max_tokens=8192)
     if not raw:
         log.error("[persona] LLM 全部失败，本次跳过")
         return
