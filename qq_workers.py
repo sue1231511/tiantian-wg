@@ -32,8 +32,9 @@ QQ_GROUP_IDS  = set(_raw_groups.split(",")) if _raw_groups else set()
 # 允许把群聊内容写入 Mem0/Pinecone 长期记忆的群白名单。
 # 不在这个白名单里的群，机器人照常说话、照常存 Supabase 短期历史，
 # 但这一轮对话不会被写进 Mem0/Pinecone。
-# 不配置 QQ_MEMORY_GROUP_IDS 环境变量时，默认只允许 661428772 这个群写入。
-_raw_memory_groups  = os.environ.get("QQ_MEMORY_GROUP_IDS", "661428772")
+# 不配置 QQ_MEMORY_GROUP_IDS 环境变量时，默认不允许任何群写入（空白名单），
+# 需要在 Zeabur 环境变量里显式配置要开放的群号。
+_raw_memory_groups  = os.environ.get("QQ_MEMORY_GROUP_IDS", "")
 QQ_MEMORY_GROUP_IDS = set(g.strip() for g in _raw_memory_groups.split(",") if g.strip())
  
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
