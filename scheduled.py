@@ -630,7 +630,7 @@ def run_platform_batch_compress():
         taboo_instruction = _build_taboo_instruction()
  
         prompt = prompts.PLATFORM_BATCH_SUMMARY.format(content=content, taboo_instruction=taboo_instruction)
-        summary = _llm_chat("你是晏安。", prompt, max_tokens=4000)
+        summary = _llm_chat(f"你是{AI_NAME}。", prompt, max_tokens=4000)
         if not summary:
             log.error("[platform-batch-compress] LLM 全部失败，本次跳过，数据保留等待下次触发重试")
             return
