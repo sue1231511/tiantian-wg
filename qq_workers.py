@@ -542,51 +542,7 @@ async def _group_reply(group_id: str, delay_range: tuple[int, int] = (15, 15),
         _hist_len_at_reply = len(get_group_history(group_id))
         messages = [{"role": "system", "content": system_prompt}] + get_group_history(group_id, 50, with_ids=True)
  
-        # 告诉 send_qq_voice / send_qq_sticker 这轮该发到这个群里。
-        set_qq_send_context("group", int(group_id))
- 
-        # 表情包随时可用（自主判断）；语音只有 allow_voice=True（猫猫本人@触发）时才出现在工具列表里，
-        # 这样其他群友@晏安不会带出发语音的能力。
-        sticker_schema = await asyncio.to_thread(build_send_qq_sticker_tool_schema)
-        group_tools = QQ_GROUP_TOOL_SCHEMAS + ([sticker_schema] if sticker_schema else []) + (QQ_VOICE_TOOL_SCHEMAS if allow_voice else [])
- 
-        final_reply = ""
-        sticker_sent_this_turn = False
-        for _ in range(3):
-            content, tool_calls = await call_llm(messages, tools=group_tools)
-            if not tool_calls:
-                final_reply = content
-                break
-            assistant_msg: dict = {"role": "assistant"}
-            if content:
-                assistant_msg["content"] = content
-            assistant_msg["tool_calls"] = tool_calls
-            messages.append(assistant_msg)
-            for tc in tool_calls:
-                fn_name = tc["function"]["name"]
-                try:
-                    fn_args = json.loads(tc["function"]["arguments"])
-                except json.JSONDecodeError:
-                    fn_args = {}
-                if fn_name == "send_qq_sticker":
-                    if sticker_sent_this_turn:
-                        # 本轮（含同一次 tool_calls 里模型并行返回的多个调用）已经发过一张表情包了，
-                        # 直接拉黑拦掉，不再真实调用 dispatch，避免连续刷屏。
-                        tool_result = "❌ 本轮已经发过一张表情包了，这次禁止重复发送。"
-                    else:
-                        tool_result = await asyncio.to_thread(FREE_TOOL_DISPATCH[fn_name], fn_args)
-                        sticker_sent_this_turn = True
-                        # 已经真实发出去了，本轮及后续轮次都不再让模型看到这个工具，
-                        # 避免它把同一张/不同表情包连发好几次。
-                        group_tools = [s for s in group_tools if s["function"]["name"] != "send_qq_sticker"]
-                elif fn_name in FREE_TOOL_DISPATCH:
-                    tool_result = await asyncio.to_thread(FREE_TOOL_DISPATCH[fn_name], fn_args)
-                else:
-                    tool_result = f"未知工具: {fn_name}"
-                messages.append({"role": "tool", "tool_call_id": tc["id"], "content": str(tool_result)})
- 
-        if not final_reply:
-            final_reply, _ = await call_llm(messages, tools=None)
+        final_reply, _ = await call_llm(messages, tools=None)
         reply = _strip_group_prefix(_strip_name_prefix(_normalize_id_tag(_strip_tool_calls(final_reply.strip() if final_reply else ""))))
         if not reply or "PASS" in reply.upper() or reply.strip() == "通过":
             _completed = True
