@@ -542,7 +542,7 @@ async def handle_telegram_update(update: dict):
         if mem0_ctx:
             system_prompt += "\n\n" + mem0_ctx
  
-        system_prompt += "\n\n⚠️ 猫猫发的是语音，回复请更像口语对话，简短温柔。"
+        system_prompt += f"\n\n⚠️ {PARTNER_NAME}发的是语音，回复请更像口语对话，简短温柔。"
  
         history = get_chat_history_messages(30)
         messages = [{"role": "system", "content": system_prompt}] + history
