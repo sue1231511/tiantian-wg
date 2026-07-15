@@ -643,7 +643,7 @@ def _get_device_data(sb, limit: int = 3) -> str:
                 log.error(f"[_get_device_data] 解析屏幕事件时间失败 raw_t={raw_t!r}: {te}", exc_info=True)
                 t_str = raw_t[:16]
             state = {"screen_on": "亮屏", "screen_off": "息屏"}.get(ev, ev)
-            screen_text = f"【猫猫手机屏幕】当前：{state}（[{t_str}] 切换）"
+            screen_text = f"【{PARTNER_NAME}手机屏幕】当前：{state}（[{t_str}] 切换）"
     except Exception as e:
         log.error(f"[_get_device_data] 读取屏幕开关事件失败: {e}", exc_info=True)
 
