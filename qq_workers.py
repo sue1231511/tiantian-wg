@@ -20,12 +20,6 @@ from context import (
     get_chat_history_messages, get_group_history, get_all_groups_history,
     get_other_groups_context,
 )
-from free_tools import (
-    TOOL_SCHEMAS as FREE_TOOL_SCHEMAS,
-    TOOL_DISPATCH as FREE_TOOL_DISPATCH,
-    set_qq_send_context,
-    build_send_qq_sticker_tool_schema,
-)
 from mem0_client import write_mem0_chat
 from bg_executor import submit_background, track_task
  
