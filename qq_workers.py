@@ -70,21 +70,6 @@ def _get_prompt(key: str, default: str) -> str:
     return val if val else default
  
  
-QQ_GROUP_TOOL_SCHEMAS = [
-    s for s in FREE_TOOL_SCHEMAS
-    if s["function"]["name"] in ("get_weather", "get_weather_forecast", "web_search", "web_extract", "search_taobao")
-]
- 
-QQ_VOICE_TOOL_SCHEMAS = [
-    s for s in FREE_TOOL_SCHEMAS
-    if s["function"]["name"] == "send_qq_voice"
-]
- 
-# 表情包工具的 schema 不再是写死的常量：库会一直增删，每次回复前都要现查一遍
-# stickers 表、现拼目录塞给模型，让它直接照描述选 id，所以用
-# build_send_qq_sticker_tool_schema() 现场构建（见 _private_reply / _group_reply）。
-# 私聊、群聊都一直开放，晏安自己看心情判断要不要发、发哪个，不限场景。
- 
 MUTE_KEYWORDS = [k.strip() for k in os.environ.get("MUTE_KEYWORDS", "闭嘴,别讲话,安静").split(",") if k.strip()]
 MUTE_DURATION = int(os.environ.get("MUTE_DURATION", "5"))
  
