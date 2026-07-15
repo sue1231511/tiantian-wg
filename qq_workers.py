@@ -3,7 +3,6 @@ import asyncio
 import re
 import random
 import time
-import json
 import requests as _requests
 from datetime import datetime, timezone, timedelta
  
