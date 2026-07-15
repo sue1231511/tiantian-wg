@@ -209,14 +209,7 @@ def _get_private_cross_context(limit: int = 10, label: str = "私聊记录") -> 
             continue
         if len(content) > 200:
             content = content[:200] + "…"
-        prefix = "猫猫" if m["role"] == "user" else "晏安"
-        lines.append(f"{prefix}: {content}")
-    if not lines:
-        return ""
-    return f"【{label}】\n" + "\n".join(lines)
-
-
-def _get_group_cross_context(limit: int = 10) -> str:
+        prefix = PARTNER_NAME if m["role"] == "user" else AI_NAME
     all_msgs = []
     for dq in _group_cache.values():
         all_msgs.extend(list(dq))
