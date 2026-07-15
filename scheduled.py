@@ -514,7 +514,7 @@ def run_activity_day_summary(target_date=None):
 # 同时读写 platform_rolling_summary 表。
  
 def _get_group_taboo() -> str:
-    """读取猫猫在 miniapp「群聊禁忌」卡片里自己写的隐私红线（存 bot_settings
+    """读取 owner 在 miniapp「群聊禁忌」卡片里自己写的隐私红线（存 bot_settings
     表 key=group_taboo）。用于两处：
     1. 全平台滚动压缩/整理生成摘要时，要求 LLM 把这段声明原样写进摘要末尾，
        让摘要不管被谁在哪个场景读到，都自带这条警示；
