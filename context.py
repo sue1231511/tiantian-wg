@@ -1010,7 +1010,7 @@ def build_rikkahub_context(include_wx_cross: bool = True) -> str:
         parts.append(persona_rows[0]["content"])
     mem_labels = [
         (core_rows, "核心记忆"),
-        (current_rows, "猫猫近期状态"),
+        (current_rows, f"{PARTNER_NAME}近期状态"),
         (longterm_rows, "长期记忆"),
     ]
     for rows, label in mem_labels:
