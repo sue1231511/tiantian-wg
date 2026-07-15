@@ -6,6 +6,7 @@ import requests
 from datetime import datetime, timedelta, timezone
  
 import prompts
+from prompts import AI_NAME, PARTNER_NAME
  
 log = logging.getLogger(__name__)
  
