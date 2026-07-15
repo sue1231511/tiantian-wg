@@ -144,6 +144,9 @@ TOOL_DEFINITION = {
 }
  
  
+TOOL_DEFINITION["function"]["description"] = TOOL_DEFINITION["function"]["description"].replace("猫猫", PARTNER_NAME)
+
+
 def execute_tool(arguments: dict) -> str:
     action = arguments.get("action", "")
  
