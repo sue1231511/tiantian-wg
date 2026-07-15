@@ -578,7 +578,7 @@ def _format_platform_rows_for_llm(rows: list) -> str:
         else:
             scene = ""
         if role == "assistant":
-            lines.append(f"{scene}晏安: {content}")
+            lines.append(f"{scene}{AI_NAME}: {content}")
         else:
             lines.append(f"{scene}{content}")
     return "\n".join(lines)
