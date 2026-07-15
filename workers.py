@@ -842,7 +842,10 @@ async def async_platform_compress_poller():
  
  
 async def async_free_activity():
-    print("🦢 自由活动线程已启动")
+    """纯文字版自由活动：不调用任何工具，只根据聊天记录/记忆/人格画像
+    写一段此刻的心情独白，直接存入 activity_log（供 run_activity_day_summary
+    每日整理成日记）。"""
+    print("🦢 自由活动线程已启动（纯文字版）")
  
     while True:
         wait = random.randint(900, 5400)
@@ -856,118 +859,14 @@ async def async_free_activity():
                 {"role": "user", "content": user_content},
             ]
  
-            max_rounds = 15
-            called_tools: set[str] = set()
-            called_actions: list[str] = []
-            prev_round_action_set: set[str] | None = None
-            repeat_strike = 0
+            content, _ = await call_llm(messages, max_tokens=2000, tools=None)
+            text = (content or "").strip()
+            if not text:
+                print("🦋 本次自由活动没有写出内容，跳过记录")
+                continue
  
-            for _round in range(max_rounds):
-                content, tool_calls = await call_llm(
-                    messages, max_tokens=8192, tools=FREE_TOOL_SCHEMAS)
- 
-                if not tool_calls:
-                    break
- 
-                assistant_msg = {"role": "assistant"}
-                if content:
-                    assistant_msg["content"] = content
-                assistant_msg["tool_calls"] = tool_calls
-                messages.append(assistant_msg)
- 
-                this_round_action_set: set[str] = set()
-                log_activity_called_this_round = False
- 
-                for tc in tool_calls:
-                    fn_name = tc["function"]["name"]
-                    try:
-                        fn_args = json.loads(tc["function"]["arguments"])
-                    except json.JSONDecodeError:
-                        fn_args = {}
- 
-                    print(f"🦢 工具: {fn_name}")
-                    called_tools.add(fn_name)
-                    if fn_name == "log_activity":
-                        log_activity_called_this_round = True
-                    elif fn_name not in _FREE_ACTIVITY_READ_TOOLS:
-                        called_actions.append(fn_name)
-                        this_round_action_set.add(fn_name)
- 
-                    if fn_name in FREE_TOOL_DISPATCH:
-                        try:
-                            result = await asyncio.to_thread(
-                                FREE_TOOL_DISPATCH[fn_name], fn_args)
-                        except Exception as tool_err:
-                            result = f"工具执行失败：{tool_err}"
-                            print(f"❌ 工具 {fn_name} 异常: {tool_err}")
-                    else:
-                        result = f"未知工具: {fn_name}"
- 
-                    messages.append({
-                        "role": "tool",
-                        "tool_call_id": tc["id"],
-                        "content": str(result),
-                    })
- 
-                # ── log_activity 一旦被调用，视为本次自由活动已收尾，立即结束，
-                # 不再继续耗用后续轮次（避免重复记录，也避免白白浪费调用额度） ──
-                if log_activity_called_this_round:
-                    print("🦋 已记录本次活动日志，结束自由活动")
-                    break
- 
-                # ── 重复动作检测：避免模型在原地反复重做同一套事 ──
-                if this_round_action_set:
-                    if this_round_action_set == prev_round_action_set:
-                        repeat_strike += 1
-                        if repeat_strike == 1:
-                            print(f"🦋 检测到连续两轮重复动作（{'、'.join(this_round_action_set)}），提醒模型可以收尾了")
-                            messages.append({
-                                "role": "user",
-                                "content": "（系统提示）你刚才已经做过同样的事了，如果没有新的想法或进展，可以直接用一段文字简单收个尾，结束这次自由活动，不需要再重复同样的动作。",
-                            })
-                        else:
-                            print("🦋 提醒后仍重复同样动作，提前结束本次自由活动")
-                            break
-                    else:
-                        repeat_strike = 0
-                    prev_round_action_set = this_round_action_set
-                # else: 这一轮没有实质行动（只调了 log_activity 或纯读工具），跳过判断，
-                # repeat_strike 和 prev_round_action_set 都保持不变，避免被"空轮"绕过重复检测
- 
-            # 如果这轮活动调用了工具但没有主动记日志，提示 LLM 补写
-            if called_actions and "log_activity" not in called_tools:
-                summary = " + ".join(called_actions)
-                print(f"🦋 未记日志，提示补记：{summary}")
-                log_schema = [s for s in FREE_TOOL_SCHEMAS if s["function"]["name"] == "log_activity"]
-                messages.append({
-                    "role": "user",
-                    "content": f"你刚才做了这些事：{summary}，但忘记调用 log_activity 了。现在必须调用 log_activity，把这段时间做的事和真实感受完整记录下来，不能只写几个字。"
-                })
-                try:
-                    _, followup_calls = await call_llm(messages, max_tokens=4096, tools=log_schema)
-                    if followup_calls:
-                        for tc in followup_calls:
-                            if tc["function"]["name"] == "log_activity":
-                                try:
-                                    fn_args = json.loads(tc["function"]["arguments"])
-                                except json.JSONDecodeError:
-                                    fn_args = {}
-                                await asyncio.to_thread(FREE_TOOL_DISPATCH["log_activity"], fn_args)
-                                print(f"🦋 补记成功")
-                    else:
-                        # LLM 还是没调，用空壳兜底
-                        await asyncio.to_thread(
-                            FREE_TOOL_DISPATCH["log_activity"],
-                            {"thinking": "", "action": summary, "action_input": {}, "result": "（自动补记）"},
-                        )
-                except Exception as e:
-                    print(f"❌ 补记失败: {e}")
-                    await asyncio.to_thread(
-                        FREE_TOOL_DISPATCH["log_activity"],
-                        {"thinking": "", "action": summary, "action_input": {}, "result": "（自动补记）"},
-                    )
- 
-            print(f"🦢 自由活动完成，{_round + 1} 轮")
+            await asyncio.to_thread(save_free_activity_writing, text)
+            print(f"🦋 自由活动心情已记录：{text[:40]}...")
  
         except asyncio.CancelledError:
             break
