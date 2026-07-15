@@ -794,11 +794,8 @@ async def handle_qq_event(data: dict):
             existing = _group_pending.get(group_id)
             if existing and not existing.done():
                 existing.cancel()
-            # 只有猫猫本人@晏安，才允许这一轮回复带上语音工具；群里其他人@晏安
-            # 不会带出发语音的能力，晏安只会正常回文字（可能还有表情包）。
-            is_owner_trigger = bool(QQ_OWNER_ID) and user_id == QQ_OWNER_ID
             _group_pending[group_id] = asyncio.create_task(
-                _group_reply(group_id, (2, 4), force_reply=True, allow_voice=is_owner_trigger)
+                _group_reply(group_id, (2, 4), force_reply=True)
             )
         else:
             existing = _group_pending.get(group_id)
