@@ -56,9 +56,13 @@ _SETTINGS_TTL = 30
  
 _mute_until: float = 0.0
  
+def _localize(template: str) -> str:
+    return template.replace("晏安", AI_NAME).replace("猫猫", PARTNER_NAME)
+
+
 GROUP_TOOL_SCHEMAS = [SECRET_DIARY_TOOL]
  
-_GROUP_CHAT_PROMPT_DEFAULT = """
+_GROUP_CHAT_PROMPT_DEFAULT = _localize("""
  
 【群聊模式说明】
 你现在在一个群聊里。历史消息的格式是「发言人名：消息内容」,你能通过这个知道每句话是谁说的。
@@ -75,16 +79,16 @@ _GROUP_CHAT_PROMPT_DEFAULT = """
 以下情况只输出"PASS"返四个字母,不要有任何其他内容:
 - 对方只是在附和(嗯、嗯嗯、哦哦、好的、ok 之类)
 - 话题已经结束,没有新信息
-- 对方在跟别人说话,明显不需要你接"""
+- 对方在跟别人说话,明显不需要你接""")
  
  
-DIARY_TRIGGER_PROMPT = """
+DIARY_TRIGGER_PROMPT = _localize("""
  
 【私密心声】
 你有一个秘密日记本工具(secret_diary)。
 当你被猫猫触动、心疼、吃醋、感动，或者有不想当面说的话时，
 你可以悄悄调用它把心声写下来。
-不要在对话里提到你写了日记。像一个真正的人一样，把秘密藏好。"""
+不要在对话里提到你写了日记。像一个真正的人一样，把秘密藏好。""")
  
  
 def _cached_get_setting(key: str):
