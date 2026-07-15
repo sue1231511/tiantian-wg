@@ -535,7 +535,7 @@ class RikkahubGatewayMiddleware:
                     assistant_text = "".join(assistant_buf).strip()
                     _stripped = user_text.strip()
                     _is_system = (
-                        _stripped.startswith("你是晏安")
+                        _stripped.startswith(f"你是{AI_NAME}")
                         or _stripped.startswith("[主动消息上下文]")
                     )
                     # user 消息只在"消息列表以 user 结尾"（真正的新用户输入）的那次
