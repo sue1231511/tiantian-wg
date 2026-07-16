@@ -222,6 +222,8 @@ class RikkahubGatewayMiddleware:
                 await _send_json(send, 200, {
                     "supabase_url": supabase_url,
                     "supabase_key": supabase_key,
+                    "ai_name": AI_NAME,
+                    "partner_name": PARTNER_NAME,
                 })
                 return
             except (UnicodeDecodeError, json.JSONDecodeError) as parse_err:
