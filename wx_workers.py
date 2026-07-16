@@ -90,7 +90,7 @@ def _restore_context_token_cache():
         ts = datetime.fromisoformat(at_str).timestamp()
         age_hours = (time.time() - ts) / 3600
         if age_hours > _CONTEXT_TOKEN_WINDOW_HOURS:
-            print(f"📦 [WX] 历史 context_token 已超窗口期（{age_hours:.1f}h），不恢复，等待猫猫发消息")
+            print(f"📦 [WX] 历史 context_token 已超窗口期（{age_hours:.1f}h），不恢复，等待{PARTNER_NAME}发消息")
             return
         _context_token_cache[WX_OWNER_ID] = (token, ts)
         print(f"📦 [WX] 已恢复 context_token，距上次消息 {age_hours:.1f} 小时")
