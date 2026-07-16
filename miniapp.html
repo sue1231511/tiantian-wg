@@ -858,7 +858,7 @@ function renderChatContext(){
   list.innerHTML='<div class="chat-window" id="chat-window">'+
     msgs.map(m=>{
       const isUser=m.role==='user';
-      const label=isUser?'猫猫':'晏安';
+      const label=isUser?PARTNER_NAME:AI_NAME;
       const time=toBeijingTime(m.created_at);
       const full=m.content||'';
       const short=full.length>300?full.slice(0,300)+'…':full;
