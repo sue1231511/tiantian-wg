@@ -611,6 +611,8 @@ async function authenticate(){
     const data = await res.json();
     SUPABASE_URL = data.supabase_url;
     SUPABASE_KEY = data.supabase_key;
+    if(data.ai_name) AI_NAME = data.ai_name;
+    if(data.partner_name) PARTNER_NAME = data.partner_name;
     if(!SUPABASE_URL || !SUPABASE_KEY){
       statusEl.textContent = '验证失败';
       errEl.textContent = '后端未返回凭据';
