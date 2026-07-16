@@ -146,7 +146,7 @@ TOOL_DEFINITION = {
 }
  
  
-TOOL_DEFINITION["function"]["description"] = TOOL_DEFINITION["function"]["description"].replace("猫猫", PARTNER_NAME)
+TOOL_DEFINITION["function"]["description"] = TOOL_DEFINITION["function"]["description"].replace("[USER]", PARTNER_NAME)
 
 
 def execute_tool(arguments: dict) -> str:
