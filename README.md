@@ -1,4 +1,4 @@
-# tiantian-wg 项目说明文档
+# 网关项目说明文档
 
 > 仓库：`sue1231511/tiantian-wg`（GitHub，`main` 分支）
 > 一句话概括：一个部署在 Zeabur 上的**多平台 AI 男友机器人**（晏安），同时接入 Telegram / QQ / 微信 / rikkahub App，共享同一套人格、记忆和对话上下文，具备主动思考、日记、提醒、长期记忆压缩与自我反思能力。
